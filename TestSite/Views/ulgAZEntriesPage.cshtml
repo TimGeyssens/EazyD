@@ -1,0 +1,7 @@
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "ulgSystemPages.cshtml";
+}
+
+@Html.Partial("ulgAZIndex")
+@Html.Action("DisplayAZEntries", "SiteNavigationSurface")

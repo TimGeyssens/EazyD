@@ -1,0 +1,193 @@
+/*
+ * this is where the design lives
+ */
+body {
+	font-size: 19px;
+	font-family: 'Calibri' ;	
+		
+	}
+
+/* landing pages */
+.landing-item {
+	margin: 1em 0;
+	padding: 1em 0;
+	height: 150px;
+	border-radius: 6px;
+}
+		
+.landing-item:hover { 
+	background-color: #f2f2f2;
+}
+
+.landing-item .icon {
+	float: left;
+	padding: .4em;
+	font-size: 2.2em;
+	color: #888;
+}
+
+.landing-item h3 {
+	color: #222;
+	font-weight: bold;
+}
+	
+
+.landing-text {
+	display: block;
+	padding-left: 4.8em;
+}
+		
+.landing-item a:hover { text-decoration: none; }
+
+/* ------------ Navigation ------------- */
+.nav .divider {
+    height: 1px;
+    margin: 9px 0;
+    overflow: hidden;
+    background-color: #e5e5e5;
+}
+
+/* ------------ mega menus ------------- */
+
+/* widths - these need to be %ed */
+.menu-drop {
+    width: 380px;
+    z-index: 1000; 
+	font-size: 0.85em;
+}
+
+.menu-drop ul {
+    width: 160px;
+}
+
+.menu-drop ul.menu-featured {
+    width: 220px;
+	
+}
+
+
+.menu-drop {
+    display: none;
+    position: absolute;
+    top: 40px;
+    background-color: #FCFCFC;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    box-shadow: 3px 3px 4px #ddd;
+    padding: 10px 0;
+}
+
+    .menu-drop ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        float: left;
+    }
+
+    .menu-drop li {
+        padding: 0;
+        margin: 0;
+    }
+
+    .menu-drop a {
+        display: block;
+        padding: 10px 8px;
+        margin: 0;
+        line-height: 1.1em;
+    }
+
+.feature-title {
+    display: block;
+    padding-left: 70px;
+    font-size: 1.1em;
+}
+.feature-text {
+    display: block;
+    padding-left: 70px;
+}
+.menu-more {
+    padding-right: 20px;
+}
+
+    .menu-more ul {
+        width: auto;
+    }
+
+.menu-featured {
+    float: left;
+}
+
+.menu-featured a { 
+	color: #85AACA;
+}
+
+    .menu-featured .icon {
+        float:left;
+        padding: 0.4em;
+        font-size: 2em;
+    }
+
+    .menu-featured featured-text, .menu-featured featured-title {
+        margin-left: 52px;
+        display: block; 
+
+    }
+
+/* ----------- search box ----------*/
+.search-box {
+    margin-top: 2em;
+}
+
+
+/* ----------- news ----------------*/
+.news h2 {
+		margin: 0;
+	}
+
+.news h2 a { 
+	color: #333; 
+		}
+
+
+.news .carousel-caption 
+{
+	font-size: 0.7em;
+	background-color: #222;
+	
+	width: 100%;
+	
+	right: 0;
+	left: 0;
+	bottom: 0;
+	
+	padding-bottom: 0;
+	padding-top: 0;
+	
+	opacity: 0.9;
+}
+
+.news h3 { 
+	margin-top: 0.2em;
+	}
+
+.news-image {
+	margin: 0.5em;
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* EDITOR PROPERTIES - PLEASE DON'T DELETE THIS LINE TO AVOID DUPLICATE PROPERTIES */

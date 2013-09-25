@@ -1,0 +1,39 @@
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "ulgSections.cshtml";
+}
+
+@section MetaData {
+
+}
+
+<div class="row">
+	<div class="col-md-8">
+		<div class="jumbotron">
+			<h1>@Umbraco.Field("siteName")</h1>
+			@Umbraco.Field("bodyText")
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="well hidden-xs hidden-sm">
+				@Html.Partial("ulgHomepageNews")
+		</div>
+	</div>
+</div>
+
+@Html.Partial( 
+	"ulgLandingPagePartial",
+	Model.Content,
+	new ViewDataDictionary() {
+		{ "mainCount",6}
+	})
+
+	
+@section Footer {
+				
+				
+}
+
+@section Scripts {
+
+}

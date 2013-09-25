@@ -1,0 +1,44 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@*
+ Display the A-Z index letters to help navigate an A-Z of the site 
+
+ the A-Z is based on the page title, and any tags where a content item
+ has been tagged to be included under another letter.
+
+ the A-Z shows the example of how Surface Controller work
+ (the code is in the /Controllers folder)
+
+*@
+
+	@{
+     // change this to be the location of your a-z page...
+        string pathToAZIndexPage = "/a-z/";
+		if (ViewData["PathToAZIndexPage"]!= null){
+			pathToAZIndexPage = ViewData["PathToAZIndexPage"].ToString();
+		}
+     string customCssClass = "";
+			if (ViewData["CustomCssClass"]!= null){
+			customCssClass = ViewData["CustomCssClass"].ToString();
+		}	
+			
+			
+     // get the letters
+		string[] letters = new string[] {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+	
+        // add a class to the current letter, default to a
+	var currentLetter = (String.IsNullOrEmpty(Request.QueryString["letter"])) ? "a" : Request.QueryString["letter"].Substring(0,1).ToLower();
+	
+	}	
+	
+<nav class="azindex @customCssClass">
+<ul class="az">	
+	@foreach(var letter in letters){
+		var selectedClass = "";
+		if (letter == currentLetter){
+			selectedClass = "current active selected";
+		}		
+		<li><a class="@selectedClass" href="@pathToAZIndexPage?letter=@letter">@letter</a></li>	
+	}		
+	</ul>	
+</nav>
+		<div class="clearfix"></div>

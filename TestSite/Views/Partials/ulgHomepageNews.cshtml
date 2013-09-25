@@ -1,0 +1,86 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@*
+  Basic Homepage news carousel, gets the last 5 items (by date) that are targeted for 
+  this type of section page (inc homepage), and displays them in a bootstrap carousel
+
+  you would want to include things like sticky news items, auto expiry etc.
+*@
+
+@*
+
+	Package Bug - this works but the starterKit Packaged content looses the newsLocation
+				 value on import, so we are using a simpler query to prove concepts 
+	
+    var allNews = Umbraco.TypedContentAtXPath("//ulgNewsItem")
+		.Where(x=>x.IsVisible() 
+				&& x.GetPropertyValue<DateTime>("articleDate") < DateTime.Now 
+				&& x.GetPropertyValue<string>("newsLocation").Split(new Char[]{','}, StringSplitOptions.RemoveEmptyEntries).Contains(Model.Content.Id.ToString()))
+		.OrderByDescending(x=>x.GetPropertyValue<DateTime>("articleDate")).Take(5);
+
+	*@
+@{
+	
+	var allNews = Umbraco.TypedContentAtXPath("//ulgNewsItem")
+		.Where(x=>x.IsVisible() 
+			   && x.GetPropertyValue<DateTime>("articleDate") < DateTime.Now) 
+		.OrderByDescending(x=>x.GetPropertyValue<DateTime>("articleDate")).Take(5);
+    
+}
+
+@if (allNews.Any())
+{
+    <div class="news">
+		<h2>News</h2>
+        <div id="carousel-news" class="carousel slide">
+            <div class="carousel-inner">
+            @foreach(IPublishedContent newsItem in allNews) 
+            {
+                bool hasImage = false ; 
+                string imageUrl = "http://placehold.it/320x240" ; 
+                string imageAltText = String.Empty ;
+                DateTime articleDate = newsItem.GetPropertyValue<DateTime>("articleDate");
+
+                if (newsItem.HasProperty("relatedImage") && newsItem.HasValue("relatedImage"))
+                {
+                    var mediaItem = Umbraco.TypedMedia(newsItem.GetPropertyValue("relatedImage"));
+                    hasImage = true;
+                    if (mediaItem != null)
+                    {
+                        imageUrl = mediaItem.GetPropertyValue<string>("umbracoFile");
+                        imageAltText = mediaItem.GetPropertyValue<string>("alternativeText");
+
+                        if (String.IsNullOrEmpty(imageAltText))
+                        {
+                            imageAltText = mediaItem.Name;
+                        }
+                    }
+                }
+                
+                String first = @newsItem.IsFirst() ? "active" : ""; 
+                
+                <div class="item @first">
+                    @if (hasImage) {
+                        <a href="@newsItem.Url">
+                            <img src="@imageUrl" alt="@imageAltText" />
+                        </a>
+                    }
+                    <div class="carousel-caption">
+                        <h3><a href="@newsItem.Url">@newsItem.GetPropertyValue("title")</a></h3>
+                        <p>@newsItem.GetPropertyValue("newsSummary") 
+                            <a href="@newsItem.Url">Read on...</a>
+                        </p>
+                    </div>
+                </div>
+            }
+            </div>
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-news" data-slide="prev">
+                <span class="icon-prev"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel-news" data-slide="next">
+                <span class="icon-next"></span>
+            </a>
+        </div>
+		<a href="/news/">More...</a>
+    </div>
+}   

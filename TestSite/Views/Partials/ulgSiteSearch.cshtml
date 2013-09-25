@@ -1,0 +1,41 @@
+﻿@using Examine 
+@using Examine.SearchCriteria;
+
+@{
+    var searchTerm = Request.QueryString["q"];
+	 var Searcher = ExamineManager.Instance.SearchProviderCollection["WebsiteSearcher"];
+  var searchCriteria = Searcher.CreateSearchCriteria(BooleanOperation.Or);
+  var query = searchCriteria.Field("title",searchTerm).Or().Field("bodyText",searchTerm).Compile();
+var searchResults = Searcher.Search(query);
+}
+
+<h2>Search results for searchResults</h2>
+
+<ul class="search-results">
+@foreach (Examine.SearchResult results in ExamineManager.Instance.Search(searchTerm, true))
+{
+    <li>
+        <a href="@umbraco.library.NiceUrl(results.Id)">
+		@if( results.Fields.ContainsKey("title")){
+            @results.Fields["title"]
+		}
+	else {
+	@("missing title")	
+	}
+        </a>
+        <span class="search-score">(@results.Score)</span>
+        @*
+        <div>
+            @if (results.Fields["bodyText"].Length > 100)
+            {
+                @results.Fields["bodyText"].Substring(0, 100);
+            }
+            else {
+                @results.Fields["bodyText"];
+            }
+        </div>
+        *@
+    </li>
+}
+</ul>
+            
