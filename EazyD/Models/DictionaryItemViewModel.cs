@@ -16,7 +16,6 @@ namespace EazyD.Models
         public string Parent { get; set; }
 
         [Required]
-        [DataType(DataType.MultilineText)]
         public string Value { get; set; }
     }
 }

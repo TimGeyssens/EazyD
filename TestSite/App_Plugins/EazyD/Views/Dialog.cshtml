@@ -86,7 +86,7 @@
                    <div class="propertyItem">
                        <div class="propertyItemheader">Value:</div>
                        <div class="propertyItemContent">
-                             @Html.EditorFor(m => m.Value)
+                            @Html.TextAreaFor(m => m.Value, new { @cols = 20, @rows = 5 })
                             @Html.ValidationMessageFor(m => m.Value)
                        </div>
                    </div>
