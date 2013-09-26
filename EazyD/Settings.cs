@@ -63,8 +63,7 @@ namespace EazyD
                         XmlNode x = EazyDConfig.SelectSingleNode(string.Format("//setting [@key = '{0}']", key));
                         if (x != null)
                             return x.Attributes["value"].Value;
-                        else
-                            return string.Empty;
+                        return string.Empty;
                     });
         }
     }

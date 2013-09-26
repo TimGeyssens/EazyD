@@ -12,8 +12,8 @@ namespace EazyD.Extensions
         {
             if (input == null) return "";
 
-            TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
-            string result = textInfo.ToTitleCase(input.Trim()).Replace(" ", "");
+            var textInfo = new CultureInfo("en-US", false).TextInfo;
+            var result = textInfo.ToTitleCase(input.Trim()).Replace(" ", "");
 
             return result;
         }

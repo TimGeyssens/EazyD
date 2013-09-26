@@ -224,6 +224,13 @@
     <Compile Include="Providers\AutoGenKey.cs" />
     <Compile Include="Services\CacheService.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Umbraco\Dashboard\EazyD.ascx.cs">
+      <DependentUpon>EazyD.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Umbraco\Dashboard\EazyD.ascx.designer.cs">
+      <DependentUpon>EazyD.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Umbraco\StartUpHandlers.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +245,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="sym57.cur" />
+    <Content Include="Umbraco\Dashboard\EazyD.ascx" />
     <Content Include="Umbraco\Icons\dictionary_item_icon.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -291,13 +299,15 @@
 
 xcopy "$(ProjectDir)*.cur" "$(ProjectDir)..\TestSite\App_Plugins\EazyD\" /Y
 
-xcopy "$(ProjectDir)*.config" "$(ProjectDir)..\TestSite\App_Plugins\EazyD\" /Y
+xcopy "$(ProjectDir)EazyD.config" "$(ProjectDir)..\TestSite\App_Plugins\EazyD\" /Y
 
 xcopy "$(ProjectDir)App_Browsers\*.*" "$(ProjectDir)..\TestSite\App_Browsers\" /Y
 
 xcopy "$(ProjectDir)Views\*.*" "$(ProjectDir)..\TestSite\App_Plugins\EazyD\Views\" /Y   
 
 xcopy "$(ProjectDir)Umbraco\Icons\*.*" "$(ProjectDir)..\TestSite\App_Plugins\EazyD\Icons\" /Y
+
+xcopy "$(ProjectDir)Umbraco\Dashboard\*.ascx" "$(ProjectDir)..\TestSite\App_Plugins\EazyD\" /Y
 
 xcopy "$(ProjectDir)Scripts\*.*" "$(ProjectDir)..\TestSite\App_Plugins\EazyD\Scripts\" /Y</PostBuildEvent>
   </PropertyGroup>

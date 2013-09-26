@@ -1,118 +1,81 @@
 @inherits Umbraco.Web.Mvc.UmbracoTemplatePage
 @{
-    Layout = "ulgMasterView.cshtml";
+    Layout = "ulgDesign.cshtml";
 }
 
-@section Styles {
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="/css/layout.css" >
-	@Umbraco.Field(
-		"sectionStyle", 
-		recursive: true, 
-		insertBefore: "&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/", 
-		insertAfter: "&quot;&gt;")
-
-	}
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "ulgDesign.cshtml";
+}
 
 @section MetaData {
-	<!-- eGov Meta Data : Mandatory -->
-	<!-- this will make your html5 page invalid! -->
-    <meta name="DC.Subject" content="@Umbraco.Field("metaSubject")">
-    <meta name="DC.Date" content="@Umbraco.Field("updateDate", formatAsDate: true)" >
-    <meta name="DC.Creator" content="@Umbraco.Field("metaCreator", recursive: true)" >
-    <meta name="DC.Publisher" content="@Umbraco.Field("metaPublisher", recursive: true)" >
-    <meta name="DC.Title" content="@Umbraco.Field("title")" >
-    <!-- end eGov -->
-	
-	@RenderSection("MetaData",false)
-	
-	<meta name="robots" content="@Umbraco.Field("metaRobots", recursive: true)">
+
 }
 
-<div class="container">
-	<div class="row">
-		<div class="col-sm-6">
-			<h1><a href="/">@Umbraco.Field("siteName", recursive: true)</a></h1>
-		</div>				
-        <div class="col-sm-6">
-            <div class="pull-right search-box">
-                <form class="form-search" method="get" action="/search">
-                    <input type="text" class="input-medium search-query" name="q">
-                    <button type="submit" class="btn">Search</button>
-                </form>
-            </div>
-        </div>
-	</div>
-	<div class="row">
-		<div class="col-lg-12">
-			@*Replace with partial view *@
-			@Umbraco.RenderMacro("ulg.sitesections")
-		</div>
-	</div>
-</div>
-		
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="visible-lg visible-md">
-                @Html.Partial("ulgMegaMenuPartial") 
-            </div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="page-header">
+            <h1>Contact: @Umbraco.Field("title")</h1>
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-lg-6">
+        @Umbraco.Field("bodyText")
 
+        @Html.Partial("ulgRelatedLinks")
+    </div>
+    <div class="col-lg-6">
 
-<div class="container">
-	<div class="row">
-		<div class="col-lg-12">
-			@if (IsSectionDefined("BreadCrumb")){
-				@RenderSection("BreadCrumb",false)	
-			}
-			else {
-				@*default breadcrumb if one is not defined below, rewrite as partial view*@
-				@Html.Partial("ulgBreadcrumb")
-				@*Umbraco.RenderMacro("ulg.breadcrumb")	*@
-			}
-		</div>
-	</div>
-</div>
-	
-<div class="container">
-	@Html.Partial("ulgServiceAlert")
-	@RenderBody()
-</div>
-	
-<div class="container">
-	@RenderSection("Footer")
-	<div class="row">
-        <div class="col-lg-12">
-            <div class="well">
-                <div class="col-sm-6">
-                    <ul class="list-unstyled">
-                        <li><a href="/a-z/">A-Z</a></li>
-                        <li><a href="/site-map/">Site map</a></li>
-                        <li><a href="/contact-us/">Contact</a></li>
-                        <li><a href="/accessibility/">Accessibility</a></li>
-                        <li><a href="/cookies/">Cookies</a></li>
-                    </ul>
-                </div>
-		        <div class="col-sm-6">
-                    <div class="pull-right">
-                        <!-- social media icons ? -->
-                        LocalGov MVC Starterkit, 2013
+        @if (Umbraco.Field("emailAddress") != null)
+        {
+            <!-- your form filling option of choice goes here -->
+            <form id="contact" method="post">
+                <fieldset>
+                    <legend>Your details</legend>
+                    <div class="form-group">
+                        <label for="contactName">Name</label>
+                        <input type="text" class="form-control" id="contactName" placeholder="Your name" />
                     </div>
-			    </div>
-                <div class="clearfix"></div>
+                    <div class="form-group">
+                        <label for="contactEmail">Email Address</label>
+                        <input type="text" class="form-control" id="contactEmail" placeholder="You@email.com" />
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" class="form-control" rows="5"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-default">Send</button>
+                </fieldset>
+            </form>
+        }
+
+        @if (Umbraco.Field("telephone") != null)
+        {
+            <div class="page-header">
+                <h2>Telephone</h2>
             </div>
-        </div>
-	</div>
+            <p class="lead">@Umbraco.Field("telephone")</p>
+        }
+
+        @if (Umbraco.Field("address") != null)
+        {
+            <div class="page-header">
+                <h2>Address</h2>
+            </div>
+            <p>@Umbraco.Field("address")</p>
+        }
+
+    </div>
 </div>
+
+@section Footer {
+
+    
+}
 
 @section Scripts {
 
-    <!-- mega menu -->
-    <script src="/Scripts/libs/jquery.hoverIntent.minified.js"></script>
-    <script src="/Scripts/ulgMegaMenu.js"></script>
-
-	@RenderSection("Scripts",false)	
+    
 }
