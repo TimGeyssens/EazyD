@@ -217,12 +217,18 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="Controllers\EazyDController.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Interfaces\IAutoGenKey.cs" />
     <Compile Include="Models\DictionaryItemViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\AutoGenKey.cs" />
+    <Compile Include="Services\CacheService.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Umbraco\StartUpHandlers.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Content Include="EazyD.config" />
     <None Include="Scripts\jquery-1.4.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.4.4.js" />
     <Content Include="Scripts\jquery-1.4.4.min.js" />
@@ -284,6 +290,8 @@
     <PostBuildEvent>xcopy "$(ProjectDir)bin\EazyD.*" "$(ProjectDir)..\TestSite\bin\" /Y
 
 xcopy "$(ProjectDir)*.cur" "$(ProjectDir)..\TestSite\App_Plugins\EazyD\" /Y
+
+xcopy "$(ProjectDir)*.config" "$(ProjectDir)..\TestSite\App_Plugins\EazyD\" /Y
 
 xcopy "$(ProjectDir)App_Browsers\*.*" "$(ProjectDir)..\TestSite\App_Browsers\" /Y
 

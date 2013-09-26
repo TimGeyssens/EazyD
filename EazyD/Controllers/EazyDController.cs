@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EazyD.Interfaces;
 using EazyD.Models;
 using umbraco.cms.businesslogic;
 using umbraco.cms.businesslogic.language;
@@ -15,6 +16,22 @@ namespace EazyD.Controllers
         public ActionResult Dialog(string value)
         {
             var m = new DictionaryItemViewModel {Value = value};
+
+            if (Settings.GetSetting("autoGenerateKey") == true.ToString())
+            {
+                var prov = (IAutoGenKey)Activator.CreateInstance(Type.GetType(Settings.GetSetting("autoGenerateKeyProvider")));
+                var key = prov.Generate(value);
+
+                var newKey = key;
+                var c = 1;
+                while (Dictionary.DictionaryItem.hasKey(newKey))
+                {
+                    newKey = key + c;
+                    c++;
+                }
+                m.Key = newKey;
+            }
+
             if (Session["parentId"] != null)
                 m.Parent = Session["parentId"].ToString();
 
