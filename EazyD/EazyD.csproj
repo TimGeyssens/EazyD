@@ -231,6 +231,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="sym57.cur" />
     <Content Include="Umbraco\Icons\dictionary_item_icon.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -281,6 +282,8 @@
   </ProjectExtensions>
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)bin\EazyD.*" "$(ProjectDir)..\TestSite\bin\" /Y
+
+xcopy "$(ProjectDir)*.cur" "$(ProjectDir)..\TestSite\App_Plugins\EazyD\" /Y
 
 xcopy "$(ProjectDir)App_Browsers\*.*" "$(ProjectDir)..\TestSite\App_Browsers\" /Y
 
