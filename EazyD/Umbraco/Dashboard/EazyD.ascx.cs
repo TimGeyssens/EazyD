@@ -22,6 +22,13 @@ namespace EazyD.Umbraco.Dashboard
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            Gen(false);
+
+            Button1.Text = "Done";
+        }
+
+        private void Gen(bool saveTemplateChanges)
+        {
             var dir = new DirectoryInfo(Server.MapPath("~/Views"));
 
             foreach (var file in dir.GetFiles("*.cshtml"))
@@ -83,20 +90,25 @@ namespace EazyD.Umbraco.Dashboard
 
                 }
 
-                //if (changes)
-                //{
-                //    var contents = File.ReadAllText(file.FullName);
-                //    var newcontents = string.Empty;
-                //    foreach (var item in replace)
-                //        newcontents = contents.Replace(item.Value, "@Umbraco.GetDictionaryValue(\"" + item.Key + "\")");
+                if (changes && saveTemplateChanges)
+                {
+                    var contents = File.ReadAllText(file.FullName);
+                    var newcontents = contents;
+                    foreach (var item in replace)
+                        newcontents = newcontents.Replace(item.Value, "@Umbraco.GetDictionaryValue(\"" + item.Key + "\")");
 
-                //    File.WriteAllText(file.FullName, newcontents);
-                //}
+                    File.WriteAllText(file.FullName, newcontents);
+                }
 
-                //doc.Save(file.FullName);
+               
             }
+        }
 
-            Button1.Text = "Done";
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Gen(true);
+
+            Button2.Text = "Done";
         }
     }
 }
