@@ -243,3 +243,5 @@ System.ArgumentException: An item with the same key has already been added.
 2013-09-27 13:39:31,553 [7] INFO  Umbraco.Core.PluginManager - [Thread 8] Completed resolution of types of umbraco.BusinessLogic.Actions.IActionHandler, found 1 (took 4ms)
 2013-09-27 13:39:58,440 [7] INFO  Umbraco.Core.PluginManager - [Thread 10] Starting resolution types of umbraco.interfaces.ICacheRefresher
 2013-09-27 13:39:58,451 [7] INFO  Umbraco.Core.PluginManager - [Thread 10] Completed resolution of types of umbraco.interfaces.ICacheRefresher, found 22 (took 11ms)
+2013-09-27 16:03:39,295 [7] INFO  umbraco.BusinessLogic.Log - [Thread 5] Log scrubbed.  Removed all items older than 2013-07-29 16:03:39
+2013-09-27 16:03:39,297 [7] INFO  Umbraco.Core.UmbracoApplicationBase - [Thread 5] Application shutdown. Reason: ConfigurationChange
