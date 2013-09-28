@@ -53,8 +53,9 @@
     <Reference Include="cms">
       <HintPath>..\packages\UmbracoCms.Core.6.1.5\lib\cms.dll</HintPath>
     </Reference>
-    <Reference Include="controls">
-      <HintPath>..\packages\UmbracoCms.Core.6.1.5\lib\controls.dll</HintPath>
+    <Reference Include="controls, Version=1.0.5018.25269, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\V7 References\controls.dll</HintPath>
     </Reference>
     <Reference Include="CookComputing.XmlRpcV2">
       <HintPath>..\packages\xmlrpcnet.2.5.0\lib\net20\CookComputing.XmlRpcV2.dll</HintPath>
@@ -215,12 +216,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompatibilityHelper.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Controllers\EazyDController.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Interfaces\IAddMenuButton.cs" />
     <Compile Include="Interfaces\IAutoGenKey.cs" />
     <Compile Include="Models\DictionaryItemViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\AddV7MenuButton.cs" />
     <Compile Include="Providers\AutoGenKey.cs" />
     <Compile Include="Services\CacheService.cs" />
     <Compile Include="Settings.cs" />
