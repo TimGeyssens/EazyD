@@ -26,10 +26,6 @@ namespace EazyD
                 var retval = true;
                 try
                 {
-                    // Attempt to access a static AField field defined in the App class. 
-                    // However, because the App class does not define this field, 
-                    // a MissingFieldException is thrown. 
-                   
                     typeof(umbraco.uicontrols.CodeArea).InvokeMember("Menu",
                              BindingFlags.GetField, null, new umbraco.uicontrols.CodeArea(), null);
                 }
