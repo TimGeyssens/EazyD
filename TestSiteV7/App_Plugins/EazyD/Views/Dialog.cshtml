@@ -1,0 +1,228 @@
+﻿@using umbraco.presentation.umbraco.create
+@model EazyD.Models.DictionaryItemViewModel
+
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+<html>
+    <head>
+        
+        <link href="~/umbraco_client/propertypane/style.css?cdv=2" type="text/css" rel="stylesheet"/>
+        <link href="~/umbraco_client/ui/default.css?cdv=2" type="text/css" rel="stylesheet"/>
+  
+        <style>
+            #save {cursor: url(sym57.cur), progress !important;}
+        </style>
+
+        <script src="~/umbraco_client/Application/NamespaceManager.js?cdv=2" type="text/javascript"></script>
+        <script src="~/umbraco_client/ui/jquery.js?cdv=2" type="text/javascript"></script>
+        <script src="~/umbraco_client/Application/jQuery/jquery.cookie.js?cdv=2" type="text/javascript"></script>
+        <script src="~/umbraco_client/ui/jqueryui.js?cdv=2" type="text/javascript"></script>
+        <script src="~/umbraco_client/ui/base2.js?cdv=2" type="text/javascript"></script>
+        <script src="~/umbraco_client/Application/UmbracoUtils.js?cdv=2" type="text/javascript"></script>
+        <script src="~/umbraco_client/Application/UmbracoApplicationActions.js?cdv=2" type="text/javascript"></script>
+
+        <script src="~/umbraco_client/Application/UmbracoClientManager.js?cdv=2" type="text/javascript"></script>
+
+        <script src="~/umbraco_client/ui/default.js?cdv=2" type="text/javascript"></script>
+        <script src="~/umbraco_client/modal/modal.js?cdv=2" type="text/javascript"></script>
+        <script src="~/umbraco_client/Application/jQuery/jquery.hotkeys.js?cdv=2" type="text/javascript"></script>
+        
+        <script src="scripts/jquery.validate.min.js"></script>
+        <script src="scripts/jquery.validate.unobtrusive.min.js"></script>
+ 
+        @if (TempData["success"] != null)
+        {
+            <script type="text/javascript">
+            
+            UmbClientMgr.contentFrame().focus();
+           
+            @if(Request["webforms"] != null)
+            {
+                <text>
+                    UmbClientMgr.contentFrame().UmbEditor.Insert('@@Umbraco.GetDictionaryValue("@Model.Key")', '');
+                </text>
+            }
+            else
+            {
+                <text>
+                    UmbClientMgr.contentFrame().UmbEditor.Insert('@@Umbraco.GetDictionaryValue("@Model.Key")', '');
+                </text>
+            }
+            
+
+            UmbClientMgr.closeModalWindow();
+           
+            </script>
+        }
+
+
+        
+
+    </head>
+<body class="umbracoDialog">
+
+   @if (Model.Value != string.Empty)
+   {
+       using (Html.BeginForm("CreateDictionaryItem", "EazyD"))
+       {
+           <div class="propertypane" style=''>
+               <div>
+
+                   <div class="propertyItem">
+                       <div class="propertyItemheader">Key:</div>
+                       <div class="propertyItemContent">
+                           @Html.EditorFor(m => m.Key)
+                           @Html.ValidationMessageFor(m => m.Key)
+                       </div>
+                   </div>
+
+                   <div class="propertyItem">
+                       <div class="propertyItemheader">Parent:</div>
+                       <div class="propertyItemContent">
+
+                          @Html.HiddenFor(m => m.Parent)
+                          <span id="body_prop_test_btns" style="display:none;"><span id="parent_prop_title" style="font-weight:bold;" class="treePickerTitle"></span>&nbsp;&nbsp;<a href="javascript:parent_prop.ClearSelection();" style="color:red;" title="Delete">Delete</a>&nbsp;&nbsp;</span><a href="javascript:parent_prop.LaunchPicker();">Choose...</a>
+                       </div>
+                   </div>
+
+                   <div class="propertyItem">
+                       <div class="propertyItemheader">Value:</div>
+                       <div class="propertyItemContent">
+                            @Html.TextAreaFor(m => m.Value, new { @cols = 30, @rows = 5 })
+                            @Html.ValidationMessageFor(m => m.Value)
+                       </div>
+                   </div>
+                   <div class="propertyPaneFooter">-</div>
+               </div>
+           </div>
+
+           <p>
+               <input type="submit" value="ok" id="save">
+               <em>or </em>
+               <a onclick=" UmbClientMgr.closeModalWindow(); " href="#">Cancel</a>
+           </p>
+       }
+   }
+   else
+   {
+        <p>Please select some text on your template before creating a dictionary item. <br />
+            <a onclick="UmbClientMgr.closeModalWindow();" href="#">Ok</a>
+        </p>
+   }
+   
+    
+    <script type="text/javascript">
+    //<![CDATA[
+    /// <reference path="/umbraco_client/Application/NamespaceManager.js" />
+
+        Umbraco.Sys.registerNamespace("Umbraco.Controls");
+
+        (function ($) {
+            Umbraco.Controls.TreePicker = function (clientId, label, itemIdValueClientID, itemTitleClientID, itemPickerUrl, width, height, showHeader, umbracoPath) {
+                var obj = {
+                    _itemPickerUrl: itemPickerUrl,
+                    _webServiceUrl: "/App_Plugins/EazyD/GetDictionaryItemKey",
+                    _label: label,
+                    _width: width,
+                    _height: height,
+                    _itemIdValueClientID: itemIdValueClientID,
+                    _itemTitleClientID: itemTitleClientID,
+                    _showHeader: showHeader,
+                    _clientId: clientId,
+
+                    GetValue: function () {
+                        return $("#" + this._itemIdValueClientID).val();
+                    },
+
+                    LaunchPicker: function () {
+                        var _this = this;
+                        UmbClientMgr.openModalWindow(this._itemPickerUrl, this._label, this._showHeader, this._width, this._height, 60, 0, ['#cancelbutton'], function (e) { _this.SaveSelection(e); });
+                    },
+
+                    SaveSelection: function (e) {
+                        if (!e.outVal) {
+                            return;
+                        }
+                        $("#" + this._itemIdValueClientID).val(e.outVal);
+                        var _this = this;
+                        $.ajax({
+                            type: "POST",
+                            url: _this._webServiceUrl,
+                            data: '{ "id": ' + e.outVal + ' }',
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (msg) {
+                                var name = msg.d;
+                                $("#" + _this._itemTitleClientID)
+                                    .html(name)
+                                    .attr('title', name)
+                                    .parent()
+                                    .show();
+                            }
+                        });
+                    },
+
+                    ClearSelection: function () {
+                        $("#" + this._itemTitleClientID)
+                            .attr('title', '')
+                            .parent()
+                            .hide();
+                        $("#" + this._itemIdValueClientID).val('');
+                    }
+                };
+
+                //store this instance (by counter and id) so we can retrieve it later if needed
+                Umbraco.Controls.TreePicker.inst[++Umbraco.Controls.TreePicker.cntr] = obj;
+                Umbraco.Controls.TreePicker.inst[clientId] = obj;
+
+                return obj;
+            };
+
+            $(document).ready(function () {
+                // Tooltip only Text
+                $('.treePickerTitle').hover(function () {
+                    // Hover over code
+                    var title = $(this).attr('title');
+                    $(this).data('tipText', title).removeAttr('title');
+                    $('<p class="treePickerTooltip" style="z-index: 1000;"></p>').text(title).appendTo('body').fadeIn('fast');;
+                }, function () {
+                    // Hover out code
+                    $(this).attr('title', $(this).data('tipText'));
+                    $('.treePickerTooltip').remove();
+                }).mousemove(function (e) {
+                    var mousex = e.pageX + 10; //Get X coordinates
+                    var mousey = e.pageY + 5; //Get Y coordinates
+                    $('.treePickerTooltip').css({ top: mousey, left: mousex });
+                });
+            });
+
+            // Static methods
+
+            //return the existing picker object based on client id of the control
+            Umbraco.Controls.TreePicker.GetPickerById = function (id) {
+                return Umbraco.Controls.TreePicker.inst[id] || null;
+            };
+
+            // instance manager
+            Umbraco.Controls.TreePicker.cntr = 0;
+            Umbraco.Controls.TreePicker.inst = {};
+
+        })(jQuery);
+
+        var parent_prop = new Umbraco.Controls.TreePicker('parent_prop', 'Choose Parent', '@Html.IdFor(x => x.Parent)', 'parent_prop_title', '/umbraco/dialogs/treepicker.aspx?rnd=7077d2f2b909422b853d56d4efccb3f1&id=-1&treeType=dictionary&contextMenu=true&isDialog=false&app=content', 300, 400, true, '/umbraco');
+
+        @if (Model.Parent != string.Empty)
+        {
+            <text>
+            var currentSel = {};
+            currentSel.outVal = "@Model.Parent";
+            parent_prop.SaveSelection(currentSel);
+            </text>
+        }
+        //]]>
+</script>
+
+</body>
+</html>

@@ -305,15 +305,28 @@ xcopy "$(ProjectDir)*.cur" "$(ProjectDir)..\TestSite\App_Plugins\EazyD\" /Y
 
 xcopy "$(ProjectDir)EazyD.config" "$(ProjectDir)..\TestSite\App_Plugins\EazyD\" /Y
 
-xcopy "$(ProjectDir)App_Browsers\*.*" "$(ProjectDir)..\TestSite\App_Browsers\" /Y
-
 xcopy "$(ProjectDir)Views\*.*" "$(ProjectDir)..\TestSite\App_Plugins\EazyD\Views\" /Y   
 
 xcopy "$(ProjectDir)Umbraco\Icons\*.*" "$(ProjectDir)..\TestSite\App_Plugins\EazyD\Icons\" /Y
 
 xcopy "$(ProjectDir)Umbraco\Dashboard\*.ascx" "$(ProjectDir)..\TestSite\App_Plugins\EazyD\" /Y
 
-xcopy "$(ProjectDir)Scripts\*.*" "$(ProjectDir)..\TestSite\App_Plugins\EazyD\Scripts\" /Y</PostBuildEvent>
+xcopy "$(ProjectDir)Scripts\*.*" "$(ProjectDir)..\TestSite\App_Plugins\EazyD\Scripts\" /Y
+
+
+xcopy "$(ProjectDir)bin\EazyD.*" "$(ProjectDir)..\TestSiteV7\bin\" /Y
+
+xcopy "$(ProjectDir)*.cur" "$(ProjectDir)..\TestSiteV7\App_Plugins\EazyD\" /Y
+
+xcopy "$(ProjectDir)EazyD.config" "$(ProjectDir)..\TestSiteV7\App_Plugins\EazyD\" /Y
+
+xcopy "$(ProjectDir)Views\*.*" "$(ProjectDir)..\TestSiteV7\App_Plugins\EazyD\Views\" /Y   
+
+xcopy "$(ProjectDir)Umbraco\Icons\*.*" "$(ProjectDir)..\TestSiteV7\App_Plugins\EazyD\Icons\" /Y
+
+xcopy "$(ProjectDir)Umbraco\Dashboard\*.ascx" "$(ProjectDir)..\TestSiteV7\App_Plugins\EazyD\" /Y
+
+xcopy "$(ProjectDir)Scripts\*.*" "$(ProjectDir)..\TestSiteV7\App_Plugins\EazyD\Scripts\" /Y</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
