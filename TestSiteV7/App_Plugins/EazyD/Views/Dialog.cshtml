@@ -1,4 +1,5 @@
-﻿@using umbraco.presentation.umbraco.create
+﻿@using EazyD
+@using umbraco.presentation.umbraco.create
 @model EazyD.Models.DictionaryItemViewModel
 
 @{
@@ -7,38 +8,55 @@
 }
 <html>
     <head>
-        
-        <link href="~/umbraco_client/propertypane/style.css?cdv=2" type="text/css" rel="stylesheet"/>
-        <link href="~/umbraco_client/ui/default.css?cdv=2" type="text/css" rel="stylesheet"/>
-  
-        <style>
-            #save {cursor: url(sym57.cur), progress !important;}
-        </style>
+         @if (!CompatibilityHelper.IsVersion7OrNewer)
+         {
+             <link href="~/umbraco_client/propertypane/style.css?cdv=2" type="text/css" rel="stylesheet"/>
+             <link href="~/umbraco_client/ui/default.css?cdv=2" type="text/css" rel="stylesheet"/>
 
-        <script src="~/umbraco_client/Application/NamespaceManager.js?cdv=2" type="text/javascript"></script>
-        <script src="~/umbraco_client/ui/jquery.js?cdv=2" type="text/javascript"></script>
-        <script src="~/umbraco_client/Application/jQuery/jquery.cookie.js?cdv=2" type="text/javascript"></script>
-        <script src="~/umbraco_client/ui/jqueryui.js?cdv=2" type="text/javascript"></script>
-        <script src="~/umbraco_client/ui/base2.js?cdv=2" type="text/javascript"></script>
-        <script src="~/umbraco_client/Application/UmbracoUtils.js?cdv=2" type="text/javascript"></script>
-        <script src="~/umbraco_client/Application/UmbracoApplicationActions.js?cdv=2" type="text/javascript"></script>
+             <style>
+                 #save { cursor: url(sym57.cur), progress !important; }
+             </style>
 
-        <script src="~/umbraco_client/Application/UmbracoClientManager.js?cdv=2" type="text/javascript"></script>
+             <script src="~/umbraco_client/Application/NamespaceManager.js?cdv=2" type="text/javascript"></script>
+             <script src="~/umbraco_client/ui/jquery.js?cdv=2" type="text/javascript"></script>
+             <script src="~/umbraco_client/Application/jQuery/jquery.cookie.js?cdv=2" type="text/javascript"></script>
+             <script src="~/umbraco_client/ui/jqueryui.js?cdv=2" type="text/javascript"></script>
+             <script src="~/umbraco_client/ui/base2.js?cdv=2" type="text/javascript"></script>
+             <script src="~/umbraco_client/Application/UmbracoUtils.js?cdv=2" type="text/javascript"></script>
+             <script src="~/umbraco_client/Application/UmbracoApplicationActions.js?cdv=2" type="text/javascript"></script>
 
-        <script src="~/umbraco_client/ui/default.js?cdv=2" type="text/javascript"></script>
-        <script src="~/umbraco_client/modal/modal.js?cdv=2" type="text/javascript"></script>
-        <script src="~/umbraco_client/Application/jQuery/jquery.hotkeys.js?cdv=2" type="text/javascript"></script>
+             <script src="~/umbraco_client/Application/UmbracoClientManager.js?cdv=2" type="text/javascript"></script>
+
+             <script src="~/umbraco_client/ui/default.js?cdv=2" type="text/javascript"></script>
+             <script src="~/umbraco_client/modal/modal.js?cdv=2" type="text/javascript"></script>
+             <script src="~/umbraco_client/Application/jQuery/jquery.hotkeys.js?cdv=2" type="text/javascript"></script>
+
+             
+         }
+         else
+         {
+              <link href="~/umbraco/assets/css/umbraco.css?cdv=2" type="text/css" rel="stylesheet">
+             <script src="~/umbraco_client/Application/NamespaceManager.js?cdv=2" type="text/javascript"></script>
+             <script src="~/umbraco_client/ui/jquery.js?cdv=2" type="text/javascript"></script>
+             <script src="~/umbraco_client/ui/base2.js?cdv=2" type="text/javascript"></script>
+             <script src="~/umbraco_client/Application/UmbracoClientManager.js?cdv=2" type="text/javascript"></script>
+             <script src="~/umbraco_client/UI/knockout.js?cdv=2" type="text/javascript"></script>
+             <script src="~/umbraco_client/UI/knockout.mapping.js?cdv=2" type="text/javascript"></script>
+             <script src="~/umbraco_client/ui/default.js?cdv=2" type="text/javascript"></script>
+             <script src="~/umbraco/js/umbracoCheckKeys.js?cdv=2" type="text/javascript"></script>
+             <script src="~/umbraco_client/Dialogs/UmbracoField.js?cdv=2" type="text/javascript"></script>
+        }
         
         <script src="scripts/jquery.validate.min.js"></script>
         <script src="scripts/jquery.validate.unobtrusive.min.js"></script>
- 
+
         @if (TempData["success"] != null)
         {
             <script type="text/javascript">
             
             UmbClientMgr.contentFrame().focus();
            
-            @if(Request["webforms"] != null)
+            @if (Request["webforms"] != null)
             {
                 <text>
                     UmbClientMgr.contentFrame().UmbEditor.Insert('@@Umbraco.GetDictionaryValue("@Model.Key")', '');
@@ -62,55 +80,121 @@
 
     </head>
 <body class="umbracoDialog">
+    
+    @if (CompatibilityHelper.IsVersion7OrNewer)
+    {
+        <div class="umb-panel umb-modal">
+            <div class="umb-panel-body no-header with-footer">
 
-   @if (Model.Value != string.Empty)
-   {
-       using (Html.BeginForm("CreateDictionaryItem", "EazyD"))
-       {
-           <div class="propertypane" style=''>
-               <div>
 
-                   <div class="propertyItem">
-                       <div class="propertyItemheader">Key:</div>
-                       <div class="propertyItemContent">
-                           @Html.EditorFor(m => m.Key)
-                           @Html.ValidationMessageFor(m => m.Key)
-                       </div>
-                   </div>
+                <div class="umb-pane " style="">
+                    <h5 class="umb-pane-title">Create dictionary item</h5>
 
-                   <div class="propertyItem">
-                       <div class="propertyItemheader">Parent:</div>
-                       <div class="propertyItemContent">
+                    @if (Model.Value != string.Empty)
+                    {
+                        using (Html.BeginForm("CreateDictionaryItem", "EazyD"))
+                        {
+                        <div class="control-group umb-control-group" style="">
+                            <div class="umb-el-wrap ">
+                                <label class="control-label" for="VirtualPath">@Html.LabelFor(m => m.Key)</label>
+                                <div class="controls controls-row">
+                                    @Html.EditorFor(m => m.Key)
+                                    @Html.ValidationMessageFor(m => m.Key)
+                                </div>
+                            </div>
 
-                          @Html.HiddenFor(m => m.Parent)
-                          <span id="body_prop_test_btns" style="display:none;"><span id="parent_prop_title" style="font-weight:bold;" class="treePickerTitle"></span>&nbsp;&nbsp;<a href="javascript:parent_prop.ClearSelection();" style="color:red;" title="Delete">Delete</a>&nbsp;&nbsp;</span><a href="javascript:parent_prop.LaunchPicker();">Choose...</a>
-                       </div>
-                   </div>
+                            <div class="umb-el-wrap ">
+                                <label class="control-label" for="VirtualPath">@Html.LabelFor(m => m.Parent)</label>
+                                <div class="controls controls-row">
+                                    @Html.HiddenFor(m => m.Parent)
+                                    <span id="body_prop_test_btns" style="display: none;"><span id="parent_prop_title" style="font-weight: bold;" class="treePickerTitle"></span>&nbsp;&nbsp;<a href="javascript:parent_prop.ClearSelection();" style="color: red;" title="Delete">Delete</a>&nbsp;&nbsp;</span><a href="javascript:parent_prop.LaunchPicker();">Choose...</a>
+                                </div>
+                            </div>
 
-                   <div class="propertyItem">
-                       <div class="propertyItemheader">Value:</div>
-                       <div class="propertyItemContent">
-                            @Html.TextAreaFor(m => m.Value, new { @cols = 30, @rows = 5 })
-                            @Html.ValidationMessageFor(m => m.Value)
-                       </div>
-                   </div>
-                   <div class="propertyPaneFooter">-</div>
-               </div>
-           </div>
+                            <div class="umb-el-wrap ">
+                                <label class="control-label" for="VirtualPath">@Html.LabelFor(m => m.Value)</label>
+                                <div class="controls controls-row">
+                                    @Html.TextAreaFor(m => m.Value, new { @cols = 30, @rows = 5 })
+                                    @Html.ValidationMessageFor(m => m.Value)
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="umb-panel-footer">
+                            <div class="btn-toolbar umb-btn-toolbar">
+                                <a id="cancelButton" href="#" class="btn btn-link" onclick="UmbClientMgr.closeModalWindow();">Cancel</a>
+                                <input id="save" type="button" name="gem" class="btn btn-primary" value="Save">
+                            </div>
+                        </div>
+                        }
 
-           <p>
-               <input type="submit" value="ok" id="save">
-               <em>or </em>
-               <a onclick=" UmbClientMgr.closeModalWindow(); " href="#">Cancel</a>
-           </p>
-       }
-   }
-   else
-   {
-        <p>Please select some text on your template before creating a dictionary item. <br />
-            <a onclick="UmbClientMgr.closeModalWindow();" href="#">Ok</a>
-        </p>
-   }
+                    }
+                    else
+                    {
+                        <p>Please select some text on your template before creating a dictionary item. </p>
+                        <div class="umb-panel-footer">
+                            <div class="btn-toolbar umb-btn-toolbar">
+                   
+                                <input onclick="UmbClientMgr.closeModalWindow();" id="submitButton" type="button" name="gem" class="btn btn-primary" value="Ok">
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+            
+    }
+    else
+    {
+        if (Model.Value != string.Empty)
+        {
+            using (Html.BeginForm("CreateDictionaryItem", "EazyD"))
+            {
+                 <div class="propertypane" style=''>
+                     <div>
+
+                         <div class="propertyItem">
+                             <div class="propertyItemheader">Key:</div>
+                             <div class="propertyItemContent">
+                                 @Html.EditorFor(m => m.Key)
+                                 @Html.ValidationMessageFor(m => m.Key)
+                             </div>
+                         </div>
+
+                         <div class="propertyItem">
+                             <div class="propertyItemheader">Parent:</div>
+                             <div class="propertyItemContent">
+
+                                 @Html.HiddenFor(m => m.Parent)
+                                 <span id="body_prop_test_btns" style="display: none;"><span id="parent_prop_title" style="font-weight: bold;" class="treePickerTitle"></span>&nbsp;&nbsp;<a href="javascript:parent_prop.ClearSelection();" style="color: red;" title="Delete">Delete</a>&nbsp;&nbsp;</span><a href="javascript:parent_prop.LaunchPicker();">Choose...</a>
+                             </div>
+                         </div>
+
+                         <div class="propertyItem">
+                             <div class="propertyItemheader">Value:</div>
+                             <div class="propertyItemContent">
+                                 @Html.TextAreaFor(m => m.Value, new { @cols = 30, @rows = 5 })
+                                 @Html.ValidationMessageFor(m => m.Value)
+                             </div>
+                         </div>
+                         <div class="propertyPaneFooter">-</div>
+                     </div>
+                 </div>
+
+                 <p>
+                     <input type="submit" value="ok" id="save">
+                     <em>or </em>
+                     <a onclick=" UmbClientMgr.closeModalWindow(); " href="#">Cancel</a>
+                 </p>
+            }
+        }
+        else
+        {
+             <p>Please select some text on your template before creating a dictionary item. <br />
+                 <a onclick=" UmbClientMgr.closeModalWindow(); " href="#">Ok</a>
+             </p>
+        }
+    }
    
     
     <script type="text/javascript">
