@@ -3,42 +3,29 @@
       ng-show="loaded" 
       ng-submit="save()"
       val-form-manager>
-    <umb-panel>   
+    <umb-panel umb-tabs>
         <umb-header tabs="content.tabs">
             
-            <div class="span4">
-                <umb-content-name 
-                    placeholder="Enter a name..." 
-                    ng-model="content.name"></umb-content-name>
+            <div class="span7" ng-if="content.membershipScenario == 0">
+               <umb-content-name
+               placeholder="@placeholders_entername"
+               ng-model="content.name"/>
+            </div>
+            <div class="umb-headline-editor-wrapper span7" ng-if="content.membershipScenario != 0">
+                <h1>{{content.name}}</h1>
             </div>
 
-            <div class="span8">
+            <div class="span5">
                 <div class="btn-toolbar pull-right umb-btn-toolbar">
                     <div class="btn-group" ng-animate="'fade'" ng-show="formStatus">
                         <p class="btn btn-link umb-status-label">{{formStatus}}</p>
                     </div>
 
-                    <div class="btn-group" ng-class="{dimmed: content.id === 0}">
-                        <!-- options button -->
-                        <a class="btn" href="#" ng-click="options(content)" prevent-default data-toggle="dropdown">
-                           <i class="icon-settings" style="line-height: 14px"></i> Options
-                        </a>
-                        
-                        <a class="btn dropdown-toggle" ng-click="options(content)" data-toggle="dropdown">
-                            <span class="caret"></span>
-                        </a>
-                        
-                        <!-- actions -->
-                        <ul class="dropdown-menu  umb-actions" role="menu" aria-labelledby="dLabel">
-                            <li class="action" ng-class="{sep:action.seperator}" ng-repeat="action in actions">
-                                <a prevent-default
-                                    ng-click="executeMenuItem(nav.ui.currentTreeNode,action,nav.ui.currentSection)">
-                                    <i class="icon icon-{{action.cssclass}}"></i>
-                                    <span class="menu-label">{{action.name}}</span>
-                                </a>
-                            </li>                             
-                        </ul>
-                     </div>
+                    <umb-options-menu ng-show="currentNode"
+                        current-node="currentNode" 
+                        current-section="{{currentSection}}">                        
+                    </umb-options-menu>
+
                 </div>
             </div>
         </umb-header>
@@ -53,7 +40,14 @@
                         <umb-editor model="property"></umb-editor>
                     </umb-property>
 
-                    <div class="umb-tab-buttons">
+                    <div class="umb-tab-buttons" detect-fold ng-class="{'umb-dimmed': busy}">
+                        
+                        <div class="btn-group" ng-if="listViewPath">
+                            <a class="btn" href="#{{listViewPath}}">
+                                <localize key="buttons_returnToList">Return to list</localize>
+                            </a>
+                        </div>
+                        
                         <div class="btn-group">
                             <button type="submit" data-hotkey="ctrl+s" class="btn btn-success">
                                 <localize key="buttons_save">Save</localize>

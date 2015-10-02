@@ -14,16 +14,20 @@ Umbraco.Sys.ServerVariables = {
         "macroApiBaseUrl": "/umbraco/Api/Macro/",
         "authenticationApiBaseUrl": "/umbraco/UmbracoApi/Authentication/",
         //For this we'll just provide a file that exists during the mock session since we don't really have legay js tree stuff
-        "legacyTreeJs": "/belle/lib/yepnope/empty.js",
+        "legacyTreeJs": "/belle/lib/lazyload/empty.js",
+        "serverVarsJs": "/belle/lib/lazyload/empty.js",
+        "imagesApiBaseUrl": "/umbraco/UmbracoApi/Images/",
         "entityApiBaseUrl": "/umbraco/UmbracoApi/Entity/",
         "dashboardApiBaseUrl": "/umbraco/UmbracoApi/Dashboard/",
         "updateCheckApiBaseUrl": "/umbraco/Api/UpdateCheck/",
+        "relationApiBaseUrl": "/umbraco/UmbracoApi/Relation/",
         "rteApiBaseUrl": "/umbraco/UmbracoApi/RichTextPreValue/"
     },
     umbracoSettings: {
         "umbracoPath": "/umbraco",
         "appPluginsPath" : "/App_Plugins",
-        "imageFileTypes": "jpeg,jpg,gif,bmp,png,tiff,tif"
+        "imageFileTypes": "jpeg,jpg,gif,bmp,png,tiff,tif",
+        "keepUserLoggedIn": true
     },
     umbracoPlugins: {
         trees: [

@@ -20,7 +20,7 @@ namespace EazyD.Providers
             eazyDBtn.ImageURL = "../../../App_Plugins/EazyD/Icons/dictionary_item_icon.png";
             eazyDBtn.OnClickCommand =
                 @"var selection = UmbEditor.IsSimpleEditor? jQuery('#body_editorSource').getSelection().text : UmbEditor._editor.getSelection();
-                                                            UmbClientMgr.openModalWindow('/App_Plugins/EazyD/Dialog?value='+selection, 'Create Dictionary Item', true, 400, 250);
+                                                            UmbClientMgr.openModalWindow('/umbraco/backoffice/Plugins/EazyD/Dialog?value='+selection, 'Create Dictionary Item', true, 400, 250);
                                                             return false;";
 
         }

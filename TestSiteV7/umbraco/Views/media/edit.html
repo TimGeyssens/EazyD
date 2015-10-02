@@ -3,42 +3,24 @@
       ng-show="loaded" 
       ng-submit="save()"
       val-form-manager>
-    <umb-panel>  
+    <umb-panel umb-tabs ng-class="{'editor-breadcrumb': ancestors && ancestors.length > 0}">
         <umb-header tabs="content.tabs">
-            
-            <div class="span4">
-                <umb-content-name
-                    placeholder="@placeholders_entername" 
-                    ng-model="content.name"></umb-content-name>
+
+            <div class="span7">
+                <umb-content-name placeholder="@placeholders_entername"
+                                  ng-model="content.name" />
             </div>
 
-            <div class="span8">
+            <div class="span5">
                 <div class="btn-toolbar pull-right umb-btn-toolbar">
                     <div class="btn-group" ng-animate="'fade'" ng-show="formStatus">
                         <p class="btn btn-link umb-status-label">{{formStatus}}</p>
                     </div>
 
-                    <div class="btn-group" ng-class="{dimmed: content.id === 0}">
-                        <!-- options button -->
-                        <a class="btn" href="#" ng-click="options(content)" prevent-default data-toggle="dropdown">
-                           <i class="icon-settings" style="line-height: 14px"></i> Options
-                        </a>
-                        
-                        <a class="btn dropdown-toggle" ng-click="options(content)" data-toggle="dropdown">
-                            <span class="caret"></span>
-                        </a>
-                        
-                        <!-- actions -->
-                        <ul class="dropdown-menu  umb-actions" role="menu" aria-labelledby="dLabel">
-                            <li class="action" ng-class="{sep:action.seperator}" ng-repeat="action in actions">
-                                <a prevent-default
-                                    ng-click="executeMenuItem(nav.ui.currentTreeNode,action,nav.ui.currentSection)">
-                                    <i class="icon icon-{{action.cssclass}}"></i>
-                                    <span class="menu-label">{{action.name}}</span>
-                                </a>
-                            </li>                             
-                        </ul>
-                     </div>
+                    <umb-options-menu ng-show="currentNode"
+                                      current-node="currentNode"
+                                      current-section="{{currentSection}}">
+                    </umb-options-menu>
                 </div>
             </div>
         </umb-header>
@@ -47,14 +29,20 @@
             <umb-tab id="tab{{tab.id}}" rel="{{tab.id}}" ng-repeat="tab in content.tabs">
 
                 <div class="umb-pane">
-                    <umb-property 
-                        property="property"
-                        ng-repeat="property in tab.properties">
-                        
+                    <umb-property property="property"
+                                  ng-repeat="property in tab.properties">
+
                         <umb-editor model="property"></umb-editor>
                     </umb-property>
 
-                    <div class="umb-tab-buttons">
+                    <div class="umb-tab-buttons" detect-fold ng-class="{'umb-dimmed': busy}">
+
+                        <div class="btn-group" ng-show="listViewPath">
+                            <a class="btn" href="#{{listViewPath}}">
+                                <localize key="buttons_returnToList">Return to list</localize>
+                            </a>
+                        </div>
+
                         <div class="btn-group">
                             <button type="submit" data-hotkey="ctrl+s" class="btn btn-success">
                                 <localize key="buttons_save">Save</localize>
@@ -65,5 +53,12 @@
 
             </umb-tab>
         </umb-tab-view>
+
+        <ul class="umb-panel-footer-nav nav nav-pills" ng-if="ancestors && ancestors.length > 0">
+            <li ng-repeat="ancestor in ancestors">
+                <a href="#/media/media/edit/{{ancestor.id}}">{{ancestor.name}}</a>
+            </li>
+            <li></li>
+        </ul>
     </umb-panel>
 </form>

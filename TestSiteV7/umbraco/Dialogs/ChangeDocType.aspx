@@ -15,6 +15,12 @@
     
     #propertyMapping tbody tr td{border-bottom:1px solid #efefef}
     #propertyMapping td{padding: 4px; ;}  
+    body.umbracoDialog { overflow: auto; }
+    .umb-dialog .umb-control-group .umb-el-wrap { overflow: hidden; }
+    .umb-dialog .umb-control-group .umb-el-wrap label { float: left; width: 140px; font-weight: bold; }
+    .umb-dialog .umb-control-group .umb-el-wrap label:after { content:":"; }
+    .umb-dialog .umb-control-group .umb-el-wrap .controls-row { float: left; width: 280px; padding-top: 8px; }
+    .umb-dialog .umb-control-group .umb-el-wrap .controls-row select { width: auto; }
     </style>
 
 </asp:Content>
@@ -45,7 +51,7 @@
         </cc1:PropertyPanel>
 
         <asp:PlaceHolder ID="NotAvailablePlaceholder" runat="server" Visible="false">        
-            <div class="propertyItem notice" style="padding: 10px">     
+            <div class="propertyItem notice" style="padding-top: 10px">     
                 <p><%=umbraco.ui.Text("changeDocType", "docTypeCannotBeChanged") %></p>
             </div>
         </asp:PlaceHolder>
@@ -85,15 +91,14 @@
     </cc1:Pane>
 
     <asp:PlaceHolder ID="SuccessPlaceholder" runat="server" Visible="false">
-        <h2 class="propertypaneTitel"><%=umbraco.ui.Text("changeDocType", "docTypeChanged") %></h2>
-        <br />
-        <div class="success" style="padding: 10px">        
+        <p><%=umbraco.ui.Text("changeDocType", "docTypeChanged") %></p>
+        <p>        
             <asp:Literal ID="SuccessMessage" runat="server" />
             <asp:Literal ID="PropertiesMappedMessage" runat="server" />
             <asp:Literal ID="ContentPublishedMessage" runat="server" />
             <br /><br />
             <a href="#" style="color: blue" onclick="UmbClientMgr.closeModalWindow()"><%=umbraco.ui.Text("defaultdialogs", "closeThisWindow") %></a>  
-        </div>
+        </p>
     </asp:PlaceHolder>
 
     <asp:PlaceHolder ID="ValidationPlaceholder" runat="server" Visible="false">

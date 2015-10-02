@@ -13,7 +13,7 @@ namespace EazyD
         {
             routes.MapRoute(
                 name: "EazyD",
-                url: "App_Plugins/EazyD/{action}/{id}",
+                url: "umbraco/backoffice/Plugins/EazyD/{action}/{id}",
                 defaults: new { controller = "EazyD", action = "Dialog", id = UrlParameter.Optional }
             );
         }

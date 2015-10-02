@@ -45,23 +45,36 @@
 
         submitSucces: function (t) {
             if (t != 'true') {
-                top.UmbSpeechBubble.ShowMessage('error', 'Saving Xslt file failed',"<pre>" + t + "</pre>");
-            }
-            else {
-                top.UmbSpeechBubble.ShowMessage('save', 'Xslt file saved', '');
+                top.UmbSpeechBubble.ShowMessage('error', 'Saving XSLT file failed',"<pre>" + t + "</pre>");
             }
             
             var newFilePath = this._opts.nameTxtBox.val();
-            UmbClientMgr.mainTree().setActiveTreeType('xslt');
-            //we need to pass in the newId parameter so it knows which node to resync after retreival from the server
-            UmbClientMgr.mainTree().syncTree("-1,init," + this._opts.originalFileName, true, null, newFilePath);
-            //set the original file path to the new one
-            this._opts.originalFileName = newFilePath;
+
+            //if the filename changes, we need to redirect since the file name is used in the url
+            if (this._opts.originalFileName != newFilePath) {
+                var newLocation = window.location.pathname + "?" + "&file=" + newFilePath;
+
+                UmbClientMgr.contentFrame(newLocation);
+
+                //we need to do this after we navigate otherwise the navigation will wait unti lthe message timeout is done!
+                top.UmbSpeechBubble.ShowMessage('save', 'XSLT file saved', '');
+            }
+            else {
+
+                top.UmbSpeechBubble.ShowMessage('save', 'XSLT file saved', '');
+                UmbClientMgr.mainTree().setActiveTreeType('xslt');
+                //we need to pass in the newId parameter so it knows which node to resync after retreival from the server
+                UmbClientMgr.mainTree().syncTree("-1,init," + this._opts.originalFileName, true, null, newFilePath);
+                //set the original file path to the new one
+                this._opts.originalFileName = newFilePath;
+            }
+
+            
         },
 
         submitFailure: function (t) {
             alert(t);
-            top.UmbSpeechBubble.ShowMessage('warning', 'Xslt file could not be saved', '');
+            top.UmbSpeechBubble.ShowMessage('warning', 'XSLT file could not be saved', '');
         }
     });
 })(jQuery);

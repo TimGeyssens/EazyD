@@ -5,17 +5,17 @@ var app = angular.module('umbraco', [
 	'umbraco.services',
 	'umbraco.packages',
     'ngCookies',
-    'ngMobile',
     'ngSanitize',
-    'blueimp.fileupload'
+    'ngMobile',
+    'blueimp.fileupload',
+    'tmh.dynamicLocale'
 ]);
-
-//seperate core and packages? 
 var packages = angular.module("umbraco.packages", []);
 
-
-/* For Angular 1.2: we need to load in Route, animate and touch seperately
-	    'ngRoute',
-	    'ngAnimate',
-	    'ngTouch'
-*/
+//Call a document callback if defined, this is sort of a dodgy hack to 
+// be able to configure angular values in the Default.cshtml
+// view which is much easier to do that configuring values by injecting them in  the back office controller
+// to follow through to the js initialization stuff
+if (angular.isFunction(document.angularReady)) {
+    document.angularReady.apply(this, [app]);
+}

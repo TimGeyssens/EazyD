@@ -2,6 +2,7 @@
 
 <%@ Import Namespace="System.Globalization" %>
 <%@ Import Namespace="Umbraco.Core.IO" %>
+<%@ Import Namespace="Umbraco.Web" %>
 <%@ Register TagPrefix="cc1" Namespace="umbraco.uicontrols" Assembly="controls" %>
 <%@ Register TagPrefix="umb" Namespace="ClientDependency.Core.Controls" Assembly="ClientDependency.Core" %>
 
@@ -18,12 +19,14 @@
     <div class="umb-dialog-body">
         <cc1:Pane runat="server">
 
-          <div id="loading" style="display: none;">
+          <div id="loading" style="display: none; margin-bottom: 35px;">
                 <div class="notice">
                     <p><%= umbraco.ui.Text("sort", "sortPleaseWait") %></p>
                 </div>
-                <br />
-                <cc1:ProgressBar ID="prog1" runat="server" Title="sorting.." />
+                
+                <div class="umb-loader-wrapper">
+                    <cc1:ProgressBar ID="prog1" runat="server" Title="sorting.." />
+                </div>
             </div>
 
             <div id="sortingDone" style="display: none;" class="success">
@@ -45,7 +48,7 @@
                         <thead>
                             <tr>
                                 <th style="width: 100%">Name</th>
-                                <th class="nowrap">Creation date</th>
+                                <th class="nowrap" style="display: <%=HideDateColumn ? "none;" : "block;" %>">Creation date</th>
                                 <th class="nowrap">Sort order</th>
                             </tr>
                         </thead>
@@ -71,8 +74,8 @@
                 submitButton: jQuery("#submitButton"),
                 closeWindowButton: jQuery("#closeWindowButton"),
                 dateTimeFormat: "<%=CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern%> <%=CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern%>",
-                currentId: "<%=umbraco.helper.Request("ID")%>",
-                serviceUrl: "<%= IOHelper.ResolveUrl(SystemDirectories.Umbraco)%>/WebServices/NodeSorter.asmx/UpdateSortOrder?app=<%=umbraco.helper.Request("app")%>"
+                currentId: "<%=Request.CleanForXss("ID")%>",
+                serviceUrl: "<%= IOHelper.ResolveUrl(SystemDirectories.Umbraco)%>/WebServices/NodeSorter.asmx/UpdateSortOrder?app=<%=Request.CleanForXss("app")%>"
             });
 
             sortDialog.init();
